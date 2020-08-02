@@ -1,0 +1,38 @@
+spring:
+  datasource:
+    url: ENC(H06bB/Uswpbdq67nl9xvjiT1iTBSi3gdxp9ZTViZFW7DRc/DB0Cns1UaExBH/DQ9BgWVWLe+uiU=)
+    username: ENC(Yiy0X7pFxPFyb/ABX5TdgA==)
+    password: ENC(PkEfyHxqJIxpbYJFLc7hfQIpBWqSt8aK)
+    driver-class-name: org.mariadb.jdbc.Driver
+    data: classpath:data-h2.sql # server 기동시 자동으로 실행될 sql 구문
+    initialization-mode: always    
+  jpa: # jpa sql 로깅
+    hibernate:
+      # none: 미생성, create: 항상 다시 생성, create-drop: 시작시 생성후 종료시 제거, update: 추가 테이블/컬럼 생성(삭제하진 않음), verify: 비교
+      ddl-auto: create  
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  jackson:
+    serialization:
+      fail-on-empty-beans: false # lazy loading으로 인해 json serialize 오류 방지
+      
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka-server:8761/eureka/ # eureka server 주소
+
+# 아래 설정을 하지 않으면 spring.datasource.password 오류가 발생
+# Open Config Arguments (VM arguments)에 -Djasypt.encryptor.password=비밀키를 입력한다.
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+    algorithm: PBEWithMD5AndDES
+    property:
+      prefix: ENC(
+      suffix: )
+    pool-size: 1
+
+swagger:
+  host: cdssw.duckdns.org:9000
