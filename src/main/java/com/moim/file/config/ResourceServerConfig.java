@@ -2,6 +2,7 @@ package com.moim.file.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
@@ -41,6 +42,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		http.headers().frameOptions().disable(); // X-Frame-Options 차단 해제
 		http.authorizeRequests()
 			.antMatchers(WHITE_LIST).permitAll()
+			.antMatchers(HttpMethod.POST, "/avatar").permitAll() // 아바타 허용
 			.anyRequest().authenticated(); // 모든 요청 호출시 인증되어야 함
 	}
 }
