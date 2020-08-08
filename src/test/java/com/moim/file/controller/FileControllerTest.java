@@ -57,7 +57,7 @@ public class FileControllerTest extends BaseControllerTest {
 				.alwaysDo(print()) // 항상 결과 print
 				.build();
 		
-		res = FileDto.Res.builder().fileUUID(UUID.randomUUID().toString()).build();
+		res = FileDto.Res.builder().filePath(String.format("%s/%s.%s", "/avatar", UUID.randomUUID().toString(), "jpg")).build();
 	}
 	
 	// 테스트 하는것은 dto를 가지고 controller 호출이 잘 되는지 확인

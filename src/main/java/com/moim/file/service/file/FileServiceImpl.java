@@ -39,7 +39,7 @@ public class FileServiceImpl implements FileService {
 		// DB 저장
 		fileRepository.save(info);
 		
-		return Res.builder().fileUUID(info.getUuid()).build();
+		return Res.builder().filePath(String.format("%s/%s.%s", info.getPath(), info.getUuid(), info.getExtension())).build();
 	}
 
 }

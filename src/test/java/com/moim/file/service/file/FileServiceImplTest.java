@@ -57,6 +57,6 @@ public class FileServiceImplTest {
 		FileDto.Res res = fileServiceImpl.uploadAvatar("avatar", file);
 		
 		// then
-		assertEquals(res.getFileUUID(), info.getUuid());
+		assertEquals(res.getFilePath(), String.format("%s/%s.%s", info.getPath(), info.getUuid(), info.getExtension()));
 	}
 }

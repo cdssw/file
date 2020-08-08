@@ -68,7 +68,8 @@ public class CommonComponent {
 		
 		// create directory
 		DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-		String dirPath = String.format("%s/%s/%s", basePath, group, formatter.format(new Date()));
+		String filePath = String.format("%s/%s", group, formatter.format(new Date()));
+		String dirPath = String.format("%s/%s", basePath, filePath);
 		File path = new File(dirPath);
 		if(!path.exists()) path.mkdirs();
 		
@@ -86,7 +87,8 @@ public class CommonComponent {
 				.orgFileNm(orgFileNm)
 				.chgFileNm(chgFileNm)
 				.fileSize(fileSize)
-				.path(dirPath)
+				.extension(extension)
+				.path(filePath)
 				.build();
 	}
 }

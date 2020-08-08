@@ -25,7 +25,7 @@ public class FileDto {
 	@NoArgsConstructor
 	@SuperBuilder
 	public static abstract class BaseRes {
-		private String fileUUID;
+		private String filePath;
 	}
 	
 	// 결과 DTO
