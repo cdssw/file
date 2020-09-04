@@ -130,10 +130,10 @@ public class RestExceptionHandler {
 				.build();
 	}
 	
-	// MeetBusinessException 처리
+	// FileBusinessException 처리
 	@ExceptionHandler(FileBusinessException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
-	protected ExceptRes handleMeetBusinessException(HttpServletRequest req, FileBusinessException e) {
+	protected ExceptRes handleFileBusinessException(HttpServletRequest req, FileBusinessException e) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		return ExceptRes.builder()
 				.code(e.getErrorCode().getCode())
