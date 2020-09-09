@@ -36,4 +36,9 @@ public class FileController {
 	public FileDto.Res uploadAvatar(@RequestParam("group") final String group, @RequestPart MultipartFile file) {
 		return fileService.uploadAvatar(group, file);
 	}
+	
+	@PostMapping("/image")
+	public FileDto.ImageRes uploadImage(@RequestParam("group") final String group, @RequestPart MultipartFile file) {
+		return fileService.uploadImage(group, file);
+	}
 }

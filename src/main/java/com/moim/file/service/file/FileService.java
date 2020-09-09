@@ -2,6 +2,7 @@ package com.moim.file.service.file;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.moim.file.service.file.FileDto.ImageRes;
 import com.moim.file.service.file.FileDto.Res;
 
 /**
@@ -20,4 +21,5 @@ import com.moim.file.service.file.FileDto.Res;
 public interface FileService {
 
 	Res uploadAvatar(final String group, final MultipartFile file);
+	ImageRes uploadImage(final String group, final MultipartFile file);
 }

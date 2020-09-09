@@ -3,6 +3,7 @@ package com.moim.file.service.file;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 
 import java.util.UUID;
 
@@ -58,5 +59,21 @@ public class FileServiceImplTest {
 		
 		// then
 		assertEquals(res.getFilePath(), String.format("%s/%s.%s", info.getPath(), info.getUuid(), info.getExtension()));
+	}
+	
+	@Test
+	public void testUploadImage() {
+		// given
+		String fileNm = "test_file.jpg";
+		MockMultipartFile file = new MockMultipartFile("file", fileNm, "text/plain", "file content".getBytes());
+		File info = mock(File.class);
+		given(commonComponent.saveFile(any(), any())).willReturn(info);
+		given(info.getId()).willReturn(1L);
+		
+		// when
+		FileDto.ImageRes res = fileServiceImpl.uploadImage("image", file);
+		
+		// then
+		assertEquals(res.getId(), 1L);
 	}
 }

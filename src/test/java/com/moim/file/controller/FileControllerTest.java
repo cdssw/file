@@ -51,6 +51,7 @@ public class FileControllerTest extends BaseControllerTest {
 	private WebApplicationContext ctx;
 	
 	private FileDto.Res res;
+	private FileDto.ImageRes imageRes;
 	
 	@Before
 	public void setUp() {
@@ -60,6 +61,7 @@ public class FileControllerTest extends BaseControllerTest {
 				.build();
 		
 		res = FileDto.Res.builder().filePath(String.format("%s/%s.%s", "/avatar", UUID.randomUUID().toString(), "jpg")).build();
+		imageRes = FileDto.ImageRes.builder().id(1L).filePath(String.format("%s/%s.%s", "/avatar", UUID.randomUUID().toString(), "jpg")).build();
 	}
 	
 	// 테스트 하는것은 dto를 가지고 controller 호출이 잘 되는지 확인
@@ -83,4 +85,25 @@ public class FileControllerTest extends BaseControllerTest {
 		// then
 		log.info(content);		
 	}
+	
+	@Test
+	public void testUploadImage() throws Exception {
+		// given
+		// 서비스 호출시 무조건 1L 리턴
+		given(fileService.uploadImage(any(), any())).willReturn(imageRes);
+		String fileNm = "test_file.jpg";
+		MockMultipartFile file = new MockMultipartFile("file", fileNm, "text/plain", "file content".getBytes());
+		
+		// when
+		final MvcResult result = mvc.perform(multipart("/image")
+				.file(file)
+				.param("group", "image"))
+				.andExpect(status().isOk()) // 200 확인
+				.andReturn();
+		
+		String content = result.getResponse().getContentAsString();
+		
+		// then
+		log.info(content);		
+	}	
 }
