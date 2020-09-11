@@ -45,4 +45,15 @@ public class FileDto {
 	public static class ImageRes extends BaseRes {
 		private Long id;
 	}
+	
+	// 결과 DTO
+	@Getter
+	@Setter
+	@NoArgsConstructor
+	@SuperBuilder // 부모의 생성자에 대하여 builder를 사용할수 있게 해준다.
+	public static class InfoRes extends BaseRes {
+		private Long id;
+		private String orgFileNm;
+		private byte[] data;
+	}	
 }

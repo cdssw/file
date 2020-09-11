@@ -1,15 +1,14 @@
 package com.moim.file.service.file;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import com.moim.file.component.CommonComponent;
-import com.moim.file.entity.File;
 
 /**
  * CommonComponentTest.java
@@ -27,16 +26,13 @@ import com.moim.file.entity.File;
 @RunWith(MockitoJUnitRunner.class)
 public class CommonComponentTest {
 
+	@InjectMocks
 	private CommonComponent commonComponent;
 	
 	@Before
 	public void setUp() {
-//		Field field = FileServiceImpl.class.getDeclaredField("basePath");
-//		field.setAccessible(true);
-//		field.set(null, "/volume1/file");
-		
 		commonComponent = new CommonComponent();
-		commonComponent.setBasePath("/volume1/file");
+		ReflectionTestUtils.setField(commonComponent, "basePath", "/volume1/docker/file");
 	}
 	
 	@Test

@@ -35,12 +35,8 @@ import com.moim.file.except.NotFoundException;
 @Component
 public class CommonComponent {
 	
-	private String basePath;
-	
 	@Value("${file.basepath}")
-	public void setBasePath(String basePath) {
-		this.basePath = basePath;
-	}
+	private String basePath;
 
 	// JpaRepository findById 처리를 위한 공통 Method
 	@Transactional(readOnly = true) // 성능향상을 위해
