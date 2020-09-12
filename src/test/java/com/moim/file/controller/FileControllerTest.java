@@ -158,7 +158,7 @@ public class FileControllerTest extends BaseControllerTest {
 		given(fileService.getImagesPath(any())).willReturn(list);
 		
 		// when
-		final MvcResult result = mvc.perform(post("/images")
+		final MvcResult result = mvc.perform(post("/images/path")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(dto)))
 				.andExpect(status().isOk()) // 200 확인
