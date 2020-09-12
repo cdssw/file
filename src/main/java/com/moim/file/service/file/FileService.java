@@ -23,5 +23,5 @@ public interface FileService {
 	FileDto.Res uploadAvatar(final String group, final MultipartFile file);
 	FileDto.ImageRes uploadImage(final String group, final MultipartFile file);
 	FileDto.InfoRes getImage(final Long fileId) throws IOException;
-	List<FileDto.ListRes> getImages(final FileDto.ListReq dto);
+	List<FileDto.ListRes> getImagesPath(final FileDto.ListReq dto);
 }

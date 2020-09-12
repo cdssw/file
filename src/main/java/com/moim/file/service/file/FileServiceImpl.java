@@ -86,7 +86,7 @@ public class FileServiceImpl implements FileService {
 	}
 
 	@Override
-	public List<ListRes> getImages(ListReq dto) {
+	public List<ListRes> getImagesPath(ListReq dto) {
 		return fileRepository.findByIdIn(dto.getFileList()).stream().map(m -> modelMapper.map(m, FileDto.ListRes.class)).collect(Collectors.toList());
 	}
 }

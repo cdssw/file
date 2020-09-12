@@ -138,7 +138,7 @@ public class FileControllerTest extends BaseControllerTest {
 	}
 	
 	@Test
-	public void testGetImages() throws Exception {
+	public void testGetImagesPath() throws Exception {
 		// given
 		List<Long> fileList = new ArrayList<>();
 		fileList.add(1L);
@@ -155,7 +155,7 @@ public class FileControllerTest extends BaseControllerTest {
 					.build();
 			list.add(res);
 		}
-		given(fileService.getImages(any())).willReturn(list);
+		given(fileService.getImagesPath(any())).willReturn(list);
 		
 		// when
 		final MvcResult result = mvc.perform(post("/images")

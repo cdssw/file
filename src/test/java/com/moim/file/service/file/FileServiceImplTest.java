@@ -113,7 +113,7 @@ public class FileServiceImplTest {
 	}
 	
 	@Test
-	public void testGetImages() {
+	public void testGetImagesPath() {
 		// given
 		List<Long> fileList = new ArrayList<>();
 		fileList.add(1L);
@@ -130,7 +130,7 @@ public class FileServiceImplTest {
 		given(fileRepository.findByIdIn(any())).willReturn(Arrays.asList(file1, file2, file3));
 		
 		// when
-		List<FileDto.ListRes> res = fileServiceImpl.getImages(dto);
+		List<FileDto.ListRes> res = fileServiceImpl.getImagesPath(dto);
 		
 		// then
 		assertEquals(res.size(), 3);

@@ -73,9 +73,9 @@ public class FileController {
 	    response.getOutputStream().close();
 	}
 	
-	@PostMapping("/images")
+	@PostMapping("/images/path")
 	@ResponseStatus(value = HttpStatus.OK)
-	public List<FileDto.ListRes> search(@RequestBody @Valid final FileDto.ListReq dto) {
-		return fileService.getImages(dto);
+	public List<FileDto.ListRes> getImagesPath(@RequestBody @Valid final FileDto.ListReq dto) {
+		return fileService.getImagesPath(dto);
 	}	
 }
