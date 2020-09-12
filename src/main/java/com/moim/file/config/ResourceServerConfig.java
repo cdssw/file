@@ -43,6 +43,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 		http.authorizeRequests()
 			.antMatchers(WHITE_LIST).permitAll()
 			.antMatchers(HttpMethod.POST, "/avatar").permitAll() // 아바타 허용
+			.antMatchers(HttpMethod.POST, "/images/path").permitAll() // 이미지 path 허용
+			.antMatchers(HttpMethod.GET, "/image").permitAll() // 이미지 허용
 			.anyRequest().authenticated(); // 모든 요청 호출시 인증되어야 함
 	}
 }
