@@ -4,7 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import org.junit.After;
@@ -75,8 +77,37 @@ public class FileRepositoryTest {
 		File res = fileRepository.findById(s.getId()).get();
 		
 		// then
-		assertEquals(res.getUuid(), s.getUuid());;
+		assertEquals(res.getUuid(), s.getUuid());
 	}
 	
-	
+	@Test
+	public void testFindByIdIn() {
+		// given
+		List<Long> list = new ArrayList<>();
+		for(int i = 0; i < 3; i++) {
+			String uuid = UUID.randomUUID().toString();
+			DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			String dirPath = String.format("%s/%s/%s", basePath, "image", formatter.format(new Date()));
+			
+			File file = File.builder()
+					.uuid(uuid)
+					.groupDir("image")
+					.orgFileNm("original_file_name_" + i)
+					.chgFileNm("change_file_name_" + i)
+					.extension("jpg")
+					.fileSize(1000L)
+					.path(dirPath)
+					.build();
+			
+			File s = fileRepository.save(file);
+			list.add(s.getId());
+		}
+		
+		// when
+		List<File> rst = fileRepository.findByIdIn(list);
+		
+		// then
+		assertEquals(rst.size(), 3);
+		
+	}
 }

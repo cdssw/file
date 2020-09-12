@@ -8,6 +8,9 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 import java.io.RandomAccessFile;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -16,6 +19,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.modelmapper.ModelMapper;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.springframework.mock.web.MockMultipartFile;
@@ -53,10 +57,11 @@ public class FileServiceImplTest {
 	
 	@Before
 	public void setUp() {
-		fileServiceImpl = new FileServiceImpl(commonComponent, fileRepository);
+		ModelMapper modelMapper = new ModelMapper();
+		fileServiceImpl = new FileServiceImpl(commonComponent, fileRepository, modelMapper);
 		
 		CommonComponent c = new CommonComponent();
-		fileServiceImpl2 = new FileServiceImpl(c, fileRepository);
+		fileServiceImpl2 = new FileServiceImpl(c, fileRepository, modelMapper);
 		ReflectionTestUtils.setField(fileServiceImpl2, "basePath", "/volume1/docker/file");
 	}
 	
@@ -105,5 +110,30 @@ public class FileServiceImplTest {
 		
 		// then
 		assertEquals(res.getOrgFileNm(), "org.jpg");
+	}
+	
+	@Test
+	public void testGetImages() {
+		// given
+		List<Long> fileList = new ArrayList<>();
+		fileList.add(1L);
+		fileList.add(2L);
+		fileList.add(3L);
+		FileDto.ListReq dto = FileDto.ListReq.builder().fileList(fileList).build();
+		
+		File file1 = mock(File.class);
+		File file2 = mock(File.class);
+		File file3 = mock(File.class);
+		given(file1.getId()).willReturn(1L);
+		given(file2.getId()).willReturn(2L);
+		given(file3.getId()).willReturn(3L);
+		given(fileRepository.findByIdIn(any())).willReturn(Arrays.asList(file1, file2, file3));
+		
+		// when
+		List<FileDto.ListRes> res = fileServiceImpl.getImages(dto);
+		
+		// then
+		assertEquals(res.size(), 3);
+		
 	}
 }

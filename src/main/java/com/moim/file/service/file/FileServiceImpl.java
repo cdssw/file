@@ -2,7 +2,10 @@ package com.moim.file.service.file;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -13,6 +16,8 @@ import com.moim.file.entity.File;
 import com.moim.file.repository.FileRepository;
 import com.moim.file.service.file.FileDto.ImageRes;
 import com.moim.file.service.file.FileDto.InfoRes;
+import com.moim.file.service.file.FileDto.ListReq;
+import com.moim.file.service.file.FileDto.ListRes;
 import com.moim.file.service.file.FileDto.Res;
 
 /**
@@ -34,13 +39,15 @@ public class FileServiceImpl implements FileService {
 	@Value("${file.basepath}")
 	private String basePath;
 	
+	private ModelMapper modelMapper;
 	private CommonComponent commonComponent;
 	private FileRepository fileRepository;
 	
 	@Autowired
-	public FileServiceImpl(CommonComponent commonComponent, FileRepository fileRepository) {
+	public FileServiceImpl(CommonComponent commonComponent, FileRepository fileRepository, ModelMapper modelMapper) {
 		this.commonComponent = commonComponent;
 		this.fileRepository = fileRepository;
+		this.modelMapper = modelMapper;
 	}
 	
 	@Override
@@ -76,5 +83,10 @@ public class FileServiceImpl implements FileService {
 
 		InfoRes res = InfoRes.builder().orgFileNm(file.getOrgFileNm()).data(data).build();
 		return res;
+	}
+
+	@Override
+	public List<ListRes> getImages(ListReq dto) {
+		return fileRepository.findByIdIn(dto.getFileList()).stream().map(m -> modelMapper.map(m, FileDto.ListRes.class)).collect(Collectors.toList());
 	}
 }

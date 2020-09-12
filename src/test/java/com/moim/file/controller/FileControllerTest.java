@@ -2,10 +2,15 @@ package com.moim.file.controller;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 import org.junit.Before;
@@ -13,6 +18,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -22,6 +28,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.moim.file.service.file.FileDto;
 
 import lombok.extern.slf4j.Slf4j;
@@ -49,6 +56,9 @@ public class FileControllerTest extends BaseControllerTest {
 	
 	@Autowired
 	private WebApplicationContext ctx;
+
+	@Autowired
+	private ObjectMapper objectMapper;
 	
 	private FileDto.Res res;
 	private FileDto.ImageRes imageRes;
@@ -98,6 +108,59 @@ public class FileControllerTest extends BaseControllerTest {
 		final MvcResult result = mvc.perform(multipart("/image")
 				.file(file)
 				.param("group", "image"))
+				.andExpect(status().isOk()) // 200 확인
+				.andReturn();
+		
+		String content = result.getResponse().getContentAsString();
+		
+		// then
+		log.info(content);		
+	}
+	
+	@Test
+	public void testGetImage() throws Exception {
+		// given
+		byte[] data = new byte[100];
+		Arrays.fill(data, (byte)1);
+		FileDto.InfoRes res = FileDto.InfoRes.builder().orgFileNm("test.jpg").data(data).build();
+		given(fileService.getImage(any())).willReturn(res);
+		
+		// when
+		final MvcResult result = mvc.perform(get("/image/1")
+				.contentType(MediaType.APPLICATION_OCTET_STREAM))
+				.andExpect(status().isOk()) // 200 확인
+				.andReturn();
+		
+		String content = result.getResponse().getContentAsString();
+		
+		// then
+		log.info(content);		
+	}
+	
+	@Test
+	public void testGetImages() throws Exception {
+		// given
+		List<Long> fileList = new ArrayList<>();
+		fileList.add(1L);
+		fileList.add(2L);
+		fileList.add(3L);
+		FileDto.ListReq dto = FileDto.ListReq.builder().fileList(fileList).build();
+		
+		List<FileDto.ListRes> list = new ArrayList<>();
+		for(int i = 0; i < 3; i++) {
+			FileDto.ListRes res = FileDto.ListRes.builder()
+					.orgFileNm("original_file_name_" + i)
+					.chgFileNm("change_file_name_" + i)
+					.path("/path/" + i)
+					.build();
+			list.add(res);
+		}
+		given(fileService.getImages(any())).willReturn(list);
+		
+		// when
+		final MvcResult result = mvc.perform(post("/images")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(dto)))
 				.andExpect(status().isOk()) // 200 확인
 				.andReturn();
 		

@@ -1,12 +1,9 @@
 package com.moim.file.service.file;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
-
-import com.moim.file.service.file.FileDto.ImageRes;
-import com.moim.file.service.file.FileDto.InfoRes;
-import com.moim.file.service.file.FileDto.Res;
 
 /**
  * FileService.java
@@ -23,8 +20,8 @@ import com.moim.file.service.file.FileDto.Res;
  */
 public interface FileService {
 
-	Res uploadAvatar(final String group, final MultipartFile file);
-	ImageRes uploadImage(final String group, final MultipartFile file);
-	InfoRes getImage(final Long fileId) throws IOException;
-	
+	FileDto.Res uploadAvatar(final String group, final MultipartFile file);
+	FileDto.ImageRes uploadImage(final String group, final MultipartFile file);
+	FileDto.InfoRes getImage(final Long fileId) throws IOException;
+	List<FileDto.ListRes> getImages(final FileDto.ListReq dto);
 }

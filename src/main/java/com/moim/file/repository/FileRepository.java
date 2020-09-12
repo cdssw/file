@@ -1,5 +1,7 @@
 package com.moim.file.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.moim.file.entity.File;
@@ -19,4 +21,5 @@ import com.moim.file.entity.File;
  */
 public interface FileRepository extends JpaRepository<File, Long> {
 
+	List<File> findByIdIn(List<Long> list);
 }
