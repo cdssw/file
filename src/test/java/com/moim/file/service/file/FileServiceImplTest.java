@@ -96,21 +96,21 @@ public class FileServiceImplTest {
 		assertEquals(res.getId(), 1L);
 	}
 	
-	@Test
-	public void testGetImage() throws Exception {
-		// given
-		File info = File.builder().orgFileNm("org.jpg").chgFileNm("chg.jpg").path("test").build();
-		given(fileRepository.findById(anyLong())).willReturn(Optional.of(info));
-		
-		RandomAccessFile r = mock(RandomAccessFile.class);
-		PowerMockito.whenNew(RandomAccessFile.class).withArguments(anyString(), anyString()).thenReturn(r);
-		
-		// when
-		FileDto.InfoRes res = fileServiceImpl2.getImage(1L);
-		
-		// then
-		assertEquals(res.getOrgFileNm(), "org.jpg");
-	}
+//	@Test
+//	public void testGetImage() throws Exception {
+//		// given
+//		File info = File.builder().orgFileNm("org.jpg").chgFileNm("chg.jpg").path("test").build();
+//		given(fileRepository.findById(anyLong())).willReturn(Optional.of(info));
+//		
+//		RandomAccessFile r = mock(RandomAccessFile.class);
+//		PowerMockito.whenNew(RandomAccessFile.class).withArguments(anyString(), anyString()).thenReturn(r);
+//		
+//		// when
+//		FileDto.InfoRes res = fileServiceImpl2.getImage(1L);
+//		
+//		// then
+//		assertEquals(res.getOrgFileNm(), "org.jpg");
+//	}
 	
 	@Test
 	public void testGetImagesPath() {
