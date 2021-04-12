@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: ENC(H06bB/Uswpbdq67nl9xvjiT1iTBSi3gdxp9ZTViZFW7DRc/DB0Cns1UaExBH/DQ9BgWVWLe+uiU=)
-    username: ENC(Yiy0X7pFxPFyb/ABX5TdgA==)
-    password: ENC(PkEfyHxqJIxpbYJFLc7hfQIpBWqSt8aK)
+    url: ENC(ixE43Ag57f4LqaY97WN/fsvuW9Vr4a/2eInIoGhaDUg3sCQrmNvvx6AC/uXqaOZepdw0bZqo74s=)
+    username: ENC(qQaC+Qco6YRVvHgWt3atlw==)
+    password: ENC(DxqTQeKDpLIbjNNo2a9fj1lyG9OUandb)
     driver-class-name: org.mariadb.jdbc.Driver
     initialization-mode: always    
   jpa: # jpa sql 로깅
