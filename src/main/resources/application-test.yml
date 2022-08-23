@@ -1,4 +1,10 @@
 spring:
+  datasource:
+    hikari:
+      driver-class-name: org.h2.Driver
+      jdbc-url: jdbc:h2:mem:testdb
+      username: sa
+      password: 
   h2:
     console: # h2-console 사용
       enabled: true
