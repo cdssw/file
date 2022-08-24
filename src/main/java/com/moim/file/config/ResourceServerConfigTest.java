@@ -21,7 +21,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
  */
 @EnableResourceServer
 @Configuration
-@Profile("test")
+@Profile({"test", "local"})
 public class ResourceServerConfigTest extends ResourceServerConfigurerAdapter {
 
 	@Override
