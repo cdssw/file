@@ -21,7 +21,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
  * 2020. 8. 2.    cdssw            최초 생성
  * </pre>
  */
-@Profile("!test")
+@Profile({"dev", "prod"})
 @Configuration
 @EnableResourceServer
 @EnableGlobalMethodSecurity(prePostEnabled = true) // PreAuthorize 어노테이션 활성화
